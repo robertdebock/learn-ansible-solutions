@@ -1,0 +1,18 @@
+#!/usr/bin/env ansible-playbook
+
+---
+- name: Show old files
+  hosts: all
+
+  tasks:
+    - name: Find old files
+      ansible.builtin.find:
+        paths: /tmp
+      register: old_files
+
+    - name: Show old files
+      debug:
+        msg: "{{ item.mode }}"
+      loop: "{{ old_files.files }}"
+      loop_control:
+        label: "{{ item.path }}"
