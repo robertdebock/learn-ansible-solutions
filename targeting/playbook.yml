@@ -1,0 +1,10 @@
+#!/usr/bin/env ansible-playbook
+
+---
+- name: Print something
+  hosts: applicationservers
+
+  tasks:
+    - name: Print hello world
+      ansible.builtin.debug:
+        msg: "Hello World!"

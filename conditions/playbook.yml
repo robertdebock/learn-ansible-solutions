@@ -1,0 +1,22 @@
+#!/usr/bin/env ansible-playbook
+
+---
+- name: Print something
+  hosts: applicationservers
+  gather_facts: yes
+
+  tasks:
+    - name: Print hello world
+      ansible.builtin.debug:
+        msg: "Hello World!"
+      when:
+        - ansible_distribution == "Ubuntu"
+        - ansible_distribution_major_version | int == 18 or
+          ansible_distribution_major_version | int == 19
+
+    - name: Print hello world on my Mac
+      ansible.builtin.debug:
+        msg: "Hello World!"
+      when:
+        - ansible_distribution == "MacOSX"
+        - ansible_distribution_major_version | int == 13

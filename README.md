@@ -6,3 +6,4 @@ These are solutions to the assignments described in the [Learn Ansible](https://
 
 - [1. Inventory](inventory)
 - [2. Group and host variables](group-and-host-variables)
+- [3. Targeting](targeting)
