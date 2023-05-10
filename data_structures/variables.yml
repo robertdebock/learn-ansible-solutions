@@ -1,0 +1,13 @@
+---
+
+family_members:
+  - name: "John"
+    age: 30
+    hobbies:
+      - "football"
+      - "hiking"
+  - name: "Jane"
+    age: 25
+    hobbies:
+      - "reading"
+      - "swimming"
