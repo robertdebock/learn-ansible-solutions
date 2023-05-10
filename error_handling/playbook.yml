@@ -1,0 +1,29 @@
+#!/usr/bin/env ansible-playbook
+
+---
+- name: See what exists
+  hosts: all
+
+  tasks:
+
+    - name: Store results
+      block:
+        - name: Check /tmp/bla.txt
+          ansible.builtin.command:
+            cmd: ls /tmp/bla.txt
+          changed_when: false
+          register: check_tmp_bla
+
+        - name: Put YES in /tmp/results.txt
+          ansible.builtin.lineinfile:
+            path: /tmp/results.txt
+            line: "YES: /tmp/bla.txt"
+            mode: "0644"
+            create: true
+      rescue:
+        - name: Put NO in /tmp/results.txt
+          ansible.builtin.lineinfile:
+            path: /tmp/results.txt
+            line: "NO: /tmp/bla.txt"
+            mode: "0644"
+            create: true
