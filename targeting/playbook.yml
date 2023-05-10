@@ -3,6 +3,7 @@
 ---
 - name: Print something
   hosts: applicationservers
+  gather_facts: no
 
   tasks:
     - name: Print hello world

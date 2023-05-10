@@ -1,0 +1,17 @@
+#!/usr/bin/env ansible-playbook
+
+---
+- name: Add users
+  hosts: all
+  gather_facts: no
+
+  tasks:
+    - name: Add user
+      ansible.builtin.user:
+        name: "{{ item.name }}"
+        comment: "{{ item.comment }}"
+      loop:
+        - name: "robert"
+          comment: "Robert"
+        - name: "kees"
+          comment: "Kees"
