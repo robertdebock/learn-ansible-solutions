@@ -11,7 +11,7 @@
       register: old_files
 
     - name: Show old files
-      debug:
+      ansible.builtin.debug:
         msg: "{{ item.mode }}"
       loop: "{{ old_files.files }}"
       loop_control:
