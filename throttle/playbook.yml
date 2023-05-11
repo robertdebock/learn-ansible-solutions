@@ -1,0 +1,21 @@
+#!/usr/bin/env ansible-playbook
+
+---
+- name: Do something on the webservers hosts
+  hosts: all
+  gather_facts: false
+
+  tasks:
+    - name: Say something
+      ansible.builtin.debug:
+        msg: "Hello world!"
+
+    - name: Simulate an intensive job
+      ansible.builtin.command:
+        cmd: "sleep 3"
+      changed_when: false
+      throttle: 1
+
+    - name: Say something else
+      ansible.builtin.debug:
+        msg: "Hello world again!"
