@@ -1,0 +1,27 @@
+#!/usr/bin/env ansible-playbook
+
+---
+- name: Show async
+  hosts: all
+
+  tasks:
+    - name: Do something that takes a long time
+      ansible.builtin.command:
+        cmd: "sleep 10"
+      async: 60
+      poll: 0
+      register: long_running_task
+      changed_when: false
+
+    - name: Do something in between
+      ansible.builtin.command:
+        cmd: "echo 'Hello world!'"
+      changed_when: false
+
+    - name: Check if the long running task is done
+      ansible.builtin.async_status:
+        jid: "{{ long_running_task.ansible_job_id }}"
+      register: job_status
+      until: job_status.finished
+      retries: 9
+      delay: 1
