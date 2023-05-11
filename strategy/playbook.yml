@@ -1,0 +1,17 @@
+#!/usr/bin/env ansible-playbook
+
+---
+- name: Use the free strategy
+  hosts: all
+  gather_facts: false
+  strategy: free
+
+  tasks:
+    - name: Sleep randomly
+      ansible.builtin.command:
+        cmd: "sleep {{ 30 | random }}"
+      changed_when: false
+
+    - name: Say something
+      ansible.builtin.debug:
+        msg: "Hello world!"
