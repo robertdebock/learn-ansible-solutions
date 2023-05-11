@@ -1,0 +1,14 @@
+#!/usr/bin/env ansible-playbook
+
+---
+- name: Retry something
+  hosts: all
+
+  tasks:
+    - name: Continue until /tmp/somefile exists.
+      ansible.builtin.stat:
+        path: /tmp/somefile
+      register: result
+      until: result.stat.exists
+      retries: 9
+      delay: 2
