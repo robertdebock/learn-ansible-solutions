@@ -1,0 +1,15 @@
+#!/usr/bin/env ansible-playbook
+
+---
+- name: Display something
+  hosts: all
+  gather_facts: false
+  serial:
+    - "10%"
+    - 3
+    - "100%"
+
+  tasks:
+    - name: Say my name
+      ansible.builtin.debug:
+        msg: "I'm {{ inventory_hostname }}"
