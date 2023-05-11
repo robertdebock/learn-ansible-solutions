@@ -1,0 +1,15 @@
+#!/usr/bin/env ansible-playbook
+
+---
+- name: Do something
+  hosts: all
+  gather_facts: no
+  serial: 1 # this is required because the only task runs in parallel, overwriting itself.
+
+  tasks:
+    - name: Store hostname in file on localhost
+      lineinfile:
+        line: "Host: {{ inventory_hostname }}"
+        path: /tmp/hosts.txt
+        create: true
+      delegate_to: localhost
