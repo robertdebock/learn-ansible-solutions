@@ -1,0 +1,18 @@
+#!/usr/bin/env ansible-playbook
+
+---
+- name: Collect logs
+  hosts: all
+
+  tasks:
+    - name: Create a directory to store logs
+      ansible.builtin.file:
+        path: /tmp/logs
+        state: directory
+      delegate_to: localhost
+      run_once: true
+
+    - name: Copy logs to the control node
+      ansible.builtin.fetch:
+        src: /var/log/install.log
+        dest: /tmp/logs/install.log-{{ inventory_hostname }}
