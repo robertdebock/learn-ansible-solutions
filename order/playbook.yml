@@ -1,0 +1,10 @@
+#!/usr/bin/env ansible-playbook
+
+---
+- name: Do something to hosts, in a random order
+  hosts: all
+  order: shuffle
+
+  tasks:
+    - ansible.builtin.debug:
+        msg: "Hello world!"
