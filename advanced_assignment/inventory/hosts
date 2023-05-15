@@ -1,0 +1,13 @@
+[webservers]
+infrastructure-node-1-1 ansible_connection=docker
+infrastructure-node-2-1 ansible_connection=docker
+
+[databaseservers]
+infrastructure-node-3-1 ansible_connection=docker
+infrastructure-node-4-1 ansible_connection=docker
+
+[production]
+infrastructure-node-[1:3:2]-1
+
+[development]
+infrastructure-node-[2:4:2]-1

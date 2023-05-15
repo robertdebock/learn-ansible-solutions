@@ -1,0 +1,79 @@
+#!/usr/bin/env ansible-playbook
+---
+- name: Install tools on all nodes
+  hosts: all
+  become: false
+  serial: "50%"
+
+  tasks:
+    - name: Install tools
+      ansible.builtin.package:
+        name:
+          - sudo
+          - tcpdump
+          - vim
+          - wget
+
+- name: Install Apache HTTPD on the webservers
+  hosts: webservers
+  become: true
+  tasks:
+    - name: Install Apache HTTPD
+      ansible.builtin.package:
+        name:
+          - httpd
+          - mod_ssl
+
+    - name: Start Apache HTTPD
+      ansible.builtin.service:
+        name: httpd
+        state: started
+        enabled: true
+
+- name: Install MariaDB on the database servers
+  hosts: databaseservers
+  become: true
+  tasks:
+    - name: Install MariaDB
+      ansible.builtin.package:
+        name:
+          - mariadb-server
+          - mariadb
+
+    - name: Start MariaDB
+      ansible.builtin.service:
+        name: mariadb
+        state: started
+        enabled: true
+
+- name: Install NTP
+  hosts: all
+  become: true
+
+  tasks:
+    - name: Install chrony
+      ansible.builtin.package:
+        name:
+          - chrony
+
+    - name: Configure chrony
+      ansible.builtin.template:
+        src: chrony.conf.j2
+        dest: /etc/chrony.conf
+        owner: root
+        group: root
+        mode: 0644
+      notify:
+        - Restart ntp
+
+    - name: Start ntp
+      ansible.builtin.service:
+        name: chronyd
+        state: started
+        enabled: true
+
+  handlers:
+    - name: Restart ntp
+      ansible.builtin.service:
+        name: chronyd
+        state: restarted

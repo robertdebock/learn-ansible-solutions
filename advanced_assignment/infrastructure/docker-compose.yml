@@ -1,0 +1,38 @@
+version: "3.9"
+services:
+  node-1:
+    image: "robertdebock/centos"
+    ports:
+      - "80:80"
+      - "443:443"
+    command: /sbin/init
+    volumes:
+        - /sys/fs/cgroup:/sys/fs/cgroup:ro
+    privileged: true
+  node-2:
+    image: "robertdebock/centos"
+    ports:
+      - "81:80"
+      - "444:443"
+    command: /sbin/init
+    volumes:
+        - /sys/fs/cgroup:/sys/fs/cgroup:ro
+    privileged: true
+  node-3:
+    image: "robertdebock/centos"
+    ports:
+      - "3306:3306"
+    command: /sbin/init
+    volumes:
+        - /sys/fs/cgroup:/sys/fs/cgroup:ro
+    privileged: true
+  node-4:
+    image: "robertdebock/centos"
+    ports:
+      - "3307:3306"
+    command: /sbin/init
+    volumes:
+        - /sys/fs/cgroup:/sys/fs/cgroup:ro
+    privileged: true
+
+
