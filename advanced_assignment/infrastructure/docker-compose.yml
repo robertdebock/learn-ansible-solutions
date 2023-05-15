@@ -1,6 +1,7 @@
 version: "3.9"
 services:
   node-1:
+    container_name: node-1
     image: "robertdebock/centos"
     ports:
       - "80:80"
@@ -10,6 +11,7 @@ services:
         - /sys/fs/cgroup:/sys/fs/cgroup:ro
     privileged: true
   node-2:
+    container_name: node-2
     image: "robertdebock/centos"
     ports:
       - "81:80"
@@ -19,6 +21,7 @@ services:
         - /sys/fs/cgroup:/sys/fs/cgroup:ro
     privileged: true
   node-3:
+    container_name: node-3
     image: "robertdebock/centos"
     ports:
       - "3306:3306"
@@ -27,6 +30,7 @@ services:
         - /sys/fs/cgroup:/sys/fs/cgroup:ro
     privileged: true
   node-4:
+    container_name: node-4
     image: "robertdebock/centos"
     ports:
       - "3307:3306"
