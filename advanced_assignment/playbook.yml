@@ -30,6 +30,14 @@
         state: started
         enabled: true
 
+    - name: Place index.html
+      ansible.builtin.template:
+        src: index.html.j2
+        dest: /var/www/html/index.html
+        owner: root
+        group: root
+        mode: 0644
+
 - name: Install MariaDB on the database servers
   hosts: databaseservers
   become: true
@@ -77,3 +85,20 @@
       ansible.builtin.service:
         name: chronyd
         state: restarted
+
+- name: Randomly fail and handle the error
+  hosts: all
+  become: false
+  gather_facts: no
+
+  tasks:
+    - name: Randomly fail
+      block:
+        - name: Show a message
+          ansible.builtin.debug:
+            msg: "This task will randomly fail"
+          failed_when: "{{ [0, 1] | random }}"
+      rescue:
+        - name: Show a message
+          ansible.builtin.debug:
+            msg: "This task failed, but we caught the error"
