@@ -1,0 +1,21 @@
+#!/usr/bin/env ansible-playbook
+---
+
+- name: Configure /etc/hosts
+  hosts: all
+  gather_facts: no
+  serial: 1
+
+  tasks:
+    - name: Find the date
+      ansible.builtin.setup:
+        gather_subset: date_time
+      register: my_facts
+    
+    - name: Write the IP address to /tmp/dates.txt
+      local_action:
+        module: ansible.builtin.lineinfile
+        path: /tmp/dates.txt
+        regexp: "^{{ inventory_hostname }}"
+        create: yes
+        line: "{{ inventory_hostname }}: {{ my_facts.ansible_facts.ansible_date_time.date }}"
